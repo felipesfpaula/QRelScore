@@ -1,3 +1,6 @@
+# Fork
+This small fork allows changing the underlying model used to compute the metrics.
+
 # QRelScore
 This repository is the official implementation of the EMNLP 2022 paper
 [QRelScore: Better Evaluating Generated Questions with Deeper Understanding of Context-aware Relevance](https://arxiv.org/abs/2204.13921)
