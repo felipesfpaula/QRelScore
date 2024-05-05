@@ -5,18 +5,18 @@ from torch.nn import functional as F
 from transformers import AutoConfig, AutoTokenizer, AutoModelForCausalLM
 
 class CLMScore:
-    def __init__(self, batch_size = 32, nthreads = 4, device = None):
+    def __init__(self, batch_size = 32, nthreads = 4, model_type = 'gpt2', device = None):
         self.batch_size = batch_size
         self.nthreads = nthreads
         if device is None:
             self.device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
         else:
             self.device = device
-        self.model, self.tokenizer = self.get_model()
+        self.model, self.tokenizer = self.get_model(model_type)
         self.model.eval()
         self.model.to(self.device)
 
-    def get_model(self, model_type = 'gpt2'):
+    def get_model(self, model_type):
         model_config = AutoConfig.from_pretrained(model_type)
         tokenizer = self.get_tokenizer(model_type)
         model = AutoModelForCausalLM.from_pretrained(
