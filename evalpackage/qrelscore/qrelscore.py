@@ -2,9 +2,9 @@ from ..mlmscore import MLMScore
 from ..clmscore import CLMScore
 
 class QRelScore:
-    def __init__(self, batch_size = 32, nthreads = 4, device = None):
-        self.mlm_scorer = MLMScore(batch_size, nthreads, device)
-        self.clm_scorer = CLMScore(batch_size, nthreads, device)
+    def __init__(self, batch_size = 32, nthreads = 4, device = None, mlm_model = 'bert-based-cased', clm_model = 'gpt2'):
+        self.mlm_scorer = MLMScore(batch_size, nthreads, mlm_model, device)
+        self.clm_scorer = CLMScore(batch_size, nthreads, clm_model, device)
 
     '''
         Compute the QRelScore for the list of candidates or hypotheses
