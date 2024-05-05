@@ -16,6 +16,17 @@ class QRelScore:
         Return:
             - `qrelscore` (float) : relevance score of generated questions
     '''
+    def compute_score_complete(self, gts, res):
+        mlm_scores = self.mlm_scorer.compute_score_flatten(gts, res)
+        clm_scores = self.clm_scorer.compute_score_flatten(gts, res)
+
+        epsilon = 1.0e-8
+
+        scores = list(map(lambda t: 2 * t[0] * t[1] / (t[0] + t[1] + epsilon), zip(mlm_scores, clm_scores)))
+
+        return {"qrelscore": scores, "mlm": mlm_scores, "clm": clm_scores}
+
+    
     def compute_score_flatten(self, gts, res):
         mlm_scores = self.mlm_scorer.compute_score_flatten(gts, res)
         clm_scores = self.clm_scorer.compute_score_flatten(gts, res)
